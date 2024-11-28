@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-// Define the unit conversion values in an object
 const units = [
   { label: 'Metre', value: 1 },
   { label: 'Millimetre', value: 1000 },
@@ -22,22 +21,21 @@ const units = [
 
 // Define the main App component
 const App: React.FC = () => {
-  const [inputValue, setInputValue] = useState<string>(''); // Input value should be a string since it's taken from TextInput
-  const [fromUnit, setFromUnit] = useState<number>(1); // Selected 'from' unit (using number value)
-  const [toUnit, setToUnit] = useState<number>(1); // Selected 'to' unit (using number value)
-  const [result, setResult] = useState<string>(''); // Result of conversion
-  const [openFrom, setOpenFrom] = useState(false); // Control dropdown open state for 'from' unit
-  const [openTo, setOpenTo] = useState(false); // Control dropdown open state for 'to' unit
+  const [inputValue, setInputValue] = useState<string>('');
+  const [fromUnit, setFromUnit] = useState<number>(1); 
+  const [toUnit, setToUnit] = useState<number>(1); 
+  const [result, setResult] = useState<string>('');
+  const [openFrom, setOpenFrom] = useState(false); 
+  const [openTo, setOpenTo] = useState(false); 
 
-  // Function to handle conversion
+  
   const handleConversion = (): void => {
-    const value = parseFloat(inputValue); // Convert input string to a float
-    if (isNaN(value)) {
-      setResult('Invalid input'); // Show an error if input is not a valid number
+    const value = parseFloat(inputValue); 
+    if (isNaN(value)) { 
       return;
     }
     const convertedValue = (value * fromUnit) / toUnit;
-    setResult(`${convertedValue.toFixed(4)}`); // Update the result with the converted value (to 4 decimal places)
+    setResult(`${convertedValue.toFixed(4)}`); 
   };
 
   return (
@@ -48,8 +46,6 @@ const App: React.FC = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
           <Text style={styles.title}>Length Unit Converter</Text>
-
-          {/* Input field for entering the value to convert */}
           <TextInput
             style={styles.input}
             keyboardType="numeric"
@@ -61,45 +57,41 @@ const App: React.FC = () => {
           />
 
           <View style={styles.pickerContainer}>
-            {/* Dropdown for selecting the 'from' unit */}
             <View style={styles.pickerWrapper}>
               <Text style={styles.label}>From:</Text>
               <DropDownPicker
-                open={openFrom} // Use open state to control dropdown visibility
-                value={fromUnit} // Use value instead of defaultValue
+                open={openFrom}
+                value={fromUnit}
                 items={units}
                 setOpen={setOpenFrom}
                 setValue={setFromUnit}
-                setItems={() => {}} // This can be an empty function or handled if you want to manage items
+                setItems={() => {}}
                 containerStyle={{ height: 40 }}
                 style={styles.dropdown}
-                dropDownDirection="TOP" // Make dropdown expand upwards
+                dropDownDirection="TOP"
               />
             </View>
 
-            {/* Dropdown for selecting the 'to' unit */}
             <View style={styles.pickerWrapper}>
               <Text style={styles.label}>To:</Text>
               <DropDownPicker
-                open={openTo} // Use open state to control dropdown visibility
-                value={toUnit} // Use value instead of defaultValue
+                open={openTo}
+                value={toUnit}
                 items={units}
                 setOpen={setOpenTo}
                 setValue={setToUnit}
-                setItems={() => {}} // This can be an empty function or handled if you want to manage items
+                setItems={() => {}}
                 containerStyle={{ height: 40 }}
                 style={styles.dropdown}
-                dropDownDirection="TOP" // Make dropdown expand upwards
+                dropDownDirection="TOP"
               />
             </View>
           </View>
 
-          {/* Button to trigger the conversion */}
           <View style={styles.buttonContainer}>
             <Button title="Convert" onPress={handleConversion} color="#007BFF" />
           </View>
 
-          {/* Display the conversion result */}
           {result ? <Text style={styles.result}>Result: {result}</Text> : null}
         </View>
       </TouchableWithoutFeedback>
